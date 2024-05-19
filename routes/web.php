@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
