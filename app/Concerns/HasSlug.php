@@ -20,8 +20,8 @@ trait HasSlug
         $slug = Str::slug($attribute);
         $originalSlug = $slug;
 
-        while (static::where('slug', $slug)->exists()) {
-            $slug = "{$originalSlug}-{$counter}";
+        while (self::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $counter;
             $counter++;
         }
 
@@ -30,7 +30,7 @@ trait HasSlug
 
     protected static function bootHasSlug(): void
     {
-        self::creating(static function (Sluggable $model) {
+        self::creating(function (Sluggable $model) {
             $model->{$model->slugColumn()} = static::generateUniqueSlug($model->{$model->slugAttribute()});
         });
     }
